@@ -1,0 +1,10 @@
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\bin\Debug\MNBXml.exe.config
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\bin\Debug\MNBXml.exe
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\bin\Debug\MNBXml.pdb
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\obj\Debug\MNBXml.csprojAssemblyReference.cache
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\obj\Debug\MNBXml.Form1.resources
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\obj\Debug\MNBXml.Properties.Resources.resources
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\obj\Debug\MNBXml.csproj.GenerateResource.cache
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\obj\Debug\MNBXml.csproj.CoreCompileInputs.cache
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\obj\Debug\MNBXml.exe
+C:\Users\Vivi\source\repos\XQLWL1\webszolg-ltat-sok\MNBXml\MNBXml\obj\Debug\MNBXml.pdb
