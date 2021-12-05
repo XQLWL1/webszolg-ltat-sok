@@ -22,7 +22,24 @@ namespace MNBXml
         public Form1()
         {
             InitializeComponent();
-            
+
+            /*egybe kell szervezni az alábbi függvényeket:
+             * oadXml(getRates());
+            dataGridView1.DataSource = rates;
+
+            makeChart();
+
+            Ehhez kijelölöm a 3 függvényt, jobb klikk, Qick actions and refactorings, extract method,
+            elnevezem az új függvényt, 
+            apply*/ 
+
+            RefreshData();
+        }
+
+        private void RefreshData()
+        {
+            rates.Clear();
+
             loadXml(getRates());
             dataGridView1.DataSource = rates;
 
@@ -56,7 +73,7 @@ namespace MNBXml
             {
                 RateData rateData = new RateData();
                 rateData.Date = DateTime.Parse(item.GetAttribute("date"));
-                var childElement = (XmlElement)item.ChildNodes[0];
+                XmlElement childElement = (XmlElement)item.ChildNodes[0];
                 rateData.Currency = childElement.GetAttribute("curr");
                 decimal unit = decimal.Parse(childElement.GetAttribute("unit"));
                 rateData.Value = decimal.Parse(childElement.InnerText);
@@ -72,17 +89,21 @@ namespace MNBXml
         }
 
 
-
-
         private string getRates()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
 
             GetExchangeRatesRequestBody req = new GetExchangeRatesRequestBody();
 
-            req.currencyNames = "EUR";
+            /*Át kell alakítani az alábbi 3 sort, mivel az adatokat a form1-re rakott felületről kell vennie
+             * req.currencyNames = "EUR";
             req.startDate = "2020-01-01";
-            req.endDate = "2020-6-30";
+            req.endDate = "2020-6-30";*/
+
+            req.currencyNames = (string)valuta.SelectedItem;
+            req.startDate = tolPicker.Value.ToString("yyyy-MM-dd");
+            req.endDate = igPicker.Value.ToString("yyyy-MM-dd");
+
             var response = mnbService.GetExchangeRates(req);
             //var result = response.GetExchangeRatesResult;
             return response.GetExchangeRatesResult;
@@ -91,9 +112,10 @@ namespace MNBXml
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
 
+        private void paraChanged(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }
