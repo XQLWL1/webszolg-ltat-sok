@@ -18,6 +18,7 @@ namespace MNBXml
     public partial class Form1 : Form
     {
         BindingList<RateData> rates = new BindingList<RateData>();
+        BindingList<string> currencies = new BindingList<string>();
 
         public Form1()
         {
@@ -31,17 +32,20 @@ namespace MNBXml
 
             Ehhez kijelölöm a 3 függvényt, jobb klikk, Qick actions and refactorings, extract method,
             elnevezem az új függvényt, 
-            apply*/ 
+            apply*/
+
+            loadCurrencyXml(getCurrencies());
 
             RefreshData();
         }
 
         private void RefreshData()
-        {
+        {            
             rates.Clear();
 
             loadXml(getRates());
             dataGridView1.DataSource = rates;
+            valuta.DataSource = currencies;
 
             makeChart();
         }
@@ -74,17 +78,34 @@ namespace MNBXml
                 RateData rateData = new RateData();
                 rateData.Date = DateTime.Parse(item.GetAttribute("date"));
                 XmlElement childElement = (XmlElement)item.ChildNodes[0];
-                rateData.Currency = childElement.GetAttribute("curr");
-                decimal unit = decimal.Parse(childElement.GetAttribute("unit"));
-                rateData.Value = decimal.Parse(childElement.InnerText);
-
-                if (unit !=0)
+                if (childElement!= null)
                 {
-                    rateData.Value = rateData.Value / unit;
+                    rateData.Currency = childElement.GetAttribute("curr");
+                    decimal unit = decimal.Parse(childElement.GetAttribute("unit"));
+                    rateData.Value = decimal.Parse(childElement.InnerText);
+
+                    if (unit != 0)
+                    {
+                        rateData.Value = rateData.Value / unit;
+                    }
+
+                    rates.Add(rateData);
                 }
 
-                rates.Add(rateData);
+            }
+        }
 
+        private void loadCurrencyXml(string xmlstring)
+        {
+            currencies.Clear();
+
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(xmlstring);
+
+            foreach (XmlElement item in xml.DocumentElement.ChildNodes[0])
+            {
+                string s = item.InnerText;
+                currencies.Add(s);
             }
         }
 
@@ -112,6 +133,19 @@ namespace MNBXml
 
         }
 
+        private string getCurrencies()
+        {
+            var mnbService = new MNBArfolyamServiceSoapClient();
+            GetCurrenciesRequestBody req = new GetCurrenciesRequestBody();
+            var response1 = mnbService.GetCurrencies(req);
+
+            string result = response1.GetCurrenciesResult;
+
+            File.WriteAllText("currency.xml", result);
+            
+            return response1.GetCurrenciesResult;
+        }
+        
 
         private void paraChanged(object sender, EventArgs e)
         {
